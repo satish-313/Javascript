@@ -1,0 +1,15 @@
+document.querySelector('form').onsubmit = function(){
+    fetch('https://api.exchangeratesapi.io/latest?base=USD')
+    .then(Response => Response.json())
+    .then(data => {
+            const currency = document.querySelector('#currency').value;
+             const rate = data.rate[currency];
+             if (rate !== undefined){
+                document.querySelector('#result').innerHTML = ` 1 usd to ${rate.toFixed(3)} ${currency}`;
+            }
+             else{
+                document.querySelector('#result').innerHTML = 'exchange rate is invalid';
+               }
+        });
+   return false;
+} 

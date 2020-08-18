@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>currency rates</title>
+        <script>
+            document.addEventListener('DOMContentLoaded',function(){
+                document.querySelector('form').onsubmit = function(){
+                    fetch('https://api.exchangeratesapi.io/latest?base=USD')
+                    .then(Response => Response.json())
+                    .then(data => {
+                        const currency = document.querySelector('#currency').value.toUpperCase();
+                        const rate = data.rates[currency];
+                        if (rate !== undefined){
+                            const result = `The 1 USD is ${rate.toFixed(3)} of ${currency}`
+                            document.querySelector('#result').innerHTML = result
+                        }
+                        else{
+                            document.querySelector('#result').innerHTML = 'currency is not valid'
+                        }
+                    })
+                    .catch(error =>{
+                        console.log('error',Error)
+                    })
+                    return false;
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <form>
+            <input id="currency" placeholder="currency">
+            <input type="submit" value="Convert">
+        </form>
+        <div id="result">
+
+        </div>
+    </body>
+</html>
